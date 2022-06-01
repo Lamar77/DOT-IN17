@@ -187,12 +187,15 @@ def profile(user):
             original.save(new_file_path, format="png")
     user_data = db.get_user_by_Id(current_user.id)[0]
     bird_data = db.get_id_by_user(user)
+
+    friend_requests = db.all_requested_friends(current_user.id)
+    print(friend_requests)
     if (len(bird_data) > 0):
        bird = bird_data[0]
        posts = db.get_posts_by_Id(current_user.id)
        if (posts == None):
            posts = []
-       return render_template('profile.html', title=bird['Name'], bird=bird, posts=posts, user=user_data )
+       return render_template('profile.html', title=bird['Name'], bird=bird, posts=posts, user=user_data, friend_requests=friend_requests )
     else:
        return "bird does not exist"
 # @app.route("/comments/<int:posts>")
